@@ -10,7 +10,7 @@ export default class TeamsController {
   static async findById(req: Request, res: Response) {
     const { id } = req.params;
     const data = await TeamsService.findById(id);
-    if (!data) return res.status(404).json({ message: 'Team Not Found' });
+    // if (!data) return res.status(404).json({ message: 'Team Not Found' });
     return res.json(data);
   }
 }
