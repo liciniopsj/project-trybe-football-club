@@ -4,22 +4,18 @@ import UserService from './user.service';
 import { tokenGeneration } from '../utils/auth';
 import IRes from '../interfaces/IRes';
 
-const userFieldsRequired = { status: 400, message: 'All fields must be filled' };
-const badInput = { status: 401, message: 'Invalid email or password' };
-
 export default class LoginService {
   static async login(payload: ParamsDictionary): Promise<IRes> {
     const { email, password } = payload;
+    if (!email || !password) return { status: 400, message: 'All fields must be filled' };
     const emailRegex = email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i);
-
-    if (!email || !password) return userFieldsRequired;
     if (!emailRegex || password.length < 6) {
-      return badInput;
+      return { status: 401, message: 'Invalid email or password' };
     }
 
     const user = await UserService.findOne(email);
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      return badInput;
+      return { status: 401, message: 'Invalid email or password' };
     }
 
     return { status: 200, token: { token: tokenGeneration(user.email) } };
