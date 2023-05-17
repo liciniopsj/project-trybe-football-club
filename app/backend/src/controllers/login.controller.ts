@@ -5,7 +5,7 @@ export default class LoginController {
   static async login(req: Request, res: Response) {
     const payload = req.body;
     const data = await LoginService.login(payload);
-    if (!data.token) return res.status(data.status).json(data.message);
+    if (!data.token) return res.status(data.status).json({ message: data.message });
     return res.status(data.status).json(data.token);
   }
 

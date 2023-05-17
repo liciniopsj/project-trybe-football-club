@@ -6,12 +6,12 @@ const SECRET_KEY = process.env.JWT_SECRET as jwt.Secret | 'jwt_secret';
 const tokenGeneration = (email: string) => jwt.sign({ email }, SECRET_KEY);
 
 const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization;
-  if (!token) {
+  const { authorization } = req.headers;
+  if (!authorization) {
     return res.status(401).json({ message: 'Token not found' });
   }
   try {
-    const validToken = jwt.verify(token, SECRET_KEY);
+    const validToken = jwt.verify(authorization, SECRET_KEY);
     res.locals.token = validToken;
     return next();
   } catch (e: unknown) {

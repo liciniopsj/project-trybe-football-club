@@ -8,7 +8,7 @@ export default class LoginService {
   static async login(payload: ParamsDictionary): Promise<IRes> {
     const { email, password } = payload;
     if (!email || !password) return { status: 400, message: 'All fields must be filled' };
-    const emailRegex = email.match(/[^\s@]+@[^\s@]+\.[^\s@]+/gi);
+    const emailRegex = email.match(/^[\w-_.]+@([\w-]+\.)+[\w-]{2,4}$/g);
     if (!emailRegex || password.length < 6) {
       return { status: 401, message: 'Invalid email or password' };
     }
