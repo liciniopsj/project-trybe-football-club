@@ -47,8 +47,9 @@ Matches.init({
     allowNull: false,
   },
   inProgress: {
-    type: BOOLEAN,
     allowNull: false,
+    defaultValue: true,
+    type: BOOLEAN,
   },
 }, {
   sequelize: db,
