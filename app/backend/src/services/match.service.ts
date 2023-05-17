@@ -17,13 +17,13 @@ export default class MatchService {
 
   static async finishMatch(id: number): Promise<IRes> {
     await Matches.update({ inProgress: false }, { where: { id } });
-    return { message: 'Finished' };
+    return { status: 200, message: 'Finished' };
   }
 
   static async updateScore(id: number, score: IScore): Promise<IRes | undefined> {
     const { homeTeamGoals, awayTeamGoals } = score;
     await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
-    return { message: 'Match score updated' };
+    return { status: 200, message: 'Match score updated' };
   }
 
   static async createMatch(match: NewMatch): Promise<NewMatch> {
