@@ -15,9 +15,9 @@ export default class MatchService {
     return data;
   }
 
-  static async finishMatch(id: number): Promise<IRes> {
-    await Matches.update({ inProgress: false }, { where: { id } });
-    return { status: 200, message: 'Finished' };
+  static async finishMatch(id: number): Promise<Matches | undefined> {
+    const match = await Matches.findByPk(id);
+    return match?.update({ inProgress: false });
   }
 
   static async updateScore(id: number, score: IScore): Promise<IRes | undefined> {
