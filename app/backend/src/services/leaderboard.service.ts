@@ -4,7 +4,7 @@ import { ILeaderBoard } from '../interfaces';
 import Leaderboard from '../utils/Leaderboard';
 
 export default class LeaderboardService {
-  static async pathLeaderboard(): Promise<ILeaderBoard[]> {
+  static async leaderboard(): Promise<ILeaderBoard[]> {
     const matches = await Matches.findAll({ where: { inProgress: false } });
     const teams = await Team.findAll();
     return Leaderboard.buildLeaderboard(matches, teams);
